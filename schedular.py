@@ -7,7 +7,7 @@ class Schedular:
     def __init__(self) -> None:
         self._user_name = getpass.getuser()
         self._python_version = os.popen("which python").read().strip()
-        self._script_path = "/Users/jeyaramanr/Documents/pc-resource-monitor/duck_db.py"
+        self._script_path = f"{os.getcwd()}/sql_lite.py"
 
     def is_numeric_string(self, s):
         if s.startswith("-"):
@@ -72,6 +72,7 @@ class Schedular:
         return None
 
     def schedule_cron_job(self, time_data: str):
+        print(self._script_path)
         """Schedule a cron job"""
         self._validate_crontab(time_data)
         job_schedular = CronTab(user=self._user_name)

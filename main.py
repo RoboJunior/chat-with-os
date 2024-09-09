@@ -1,6 +1,5 @@
 from schedular import Schedular
 import typer
-from langchain_community.utilities import SQLDatabase
 import google.generativeai as genai
 from dotenv import load_dotenv
 import os
@@ -9,6 +8,7 @@ import json
 import ast
 from rich.console import Console
 from rich.markdown import Markdown
+from config import Config
 
 
 load_dotenv()
@@ -22,9 +22,9 @@ console = Console()
 class Main:
     def __init__(self) -> None:
         self._schedular = Schedular()
-        self._db = SQLDatabase.from_uri("sqlite:///os_data.db")
+        self._db = Config.DB_PATH
         self._generative_model = genai.GenerativeModel(
-            "models/gemini-1.5-flash-001", generation_config={"temperature": 0.0}
+            Config.GEMINI_MODEL_NAME, generation_config={"temperature": 0.0}
         )
 
     def schedule_cron_job(self, schedule_time: str = "* * * * *"):
